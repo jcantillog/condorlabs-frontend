@@ -1,0 +1,8 @@
+{
+  "name": "condorlabs-frontend",
+  "app_id": "1602a59a",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
