@@ -11,6 +11,7 @@ import {LogsPage} from "../pages/logs/logs";
 import {StatisticsPage} from "../pages/statistics/statistics";
 
 import {LogService} from "../services/log.service";
+import {PagerService} from "../services/pager.service";
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import {LogService} from "../services/log.service";
     StatusBar,
     SplashScreen,
     LogService,
+    PagerService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

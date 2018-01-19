@@ -7,8 +7,9 @@
 </ion-header>
 
 <ion-content padding>
+  <!--<button ion-button (click)="getLogs()">GetLogs</button>-->
   <ion-item-group>
-    <ion-item-divider>
+    <ion-item-divider sticky *ngIf="pager.pages && pager.pages.length">
       <ion-row align-items-center >
         <ion-col col-1>State<br>Code</ion-col>
         <ion-col col-1>Pro<br>Code</ion-col>
@@ -23,22 +24,54 @@
         <ion-col col-1>Machine</ion-col>
       </ion-row>
     </ion-item-divider>
-    <ion-item *ngFor="let log of logsList; let i = index">
-      <ion-row>
-        <ion-col col-1><div>{{log.cd_cebroker_state}}</div></ion-col>
-        <ion-col col-1><div>{{log.pro_cde}}</div></ion-col>
-        <ion-col col-2><div>{{log.cd_profession}}</div></ion-col>
-        <ion-col col-1><div>{{log.id_license}}</div></ion-col>
-        <ion-col col-3><div>{{log.dt_end}}</div></ion-col>
-        <ion-col col-2><div>{{log.ds_compl_status_returned}}</div></ion-col>
-        <ion-col col-1><div>{{log.id_client_nbr}}</div></ion-col>
-        <ion-col col-3 style="font-size: small;" align-self-center><div>{{log.dt_Start_Log}}</div></ion-col>
-        <ion-col col-3 style="font-size: small;" align-self-center><div>{{log.dt_end_log}}</div></ion-col>
-        <ion-col col-2><div>{{log.cd_environment}}</div></ion-col>
-        <ion-col col-1><div>{{log.cd_machine}}</div></ion-col>
-      </ion-row>
-    </ion-item>
+    <ion-item *ngFor="let log of pagedItems; let i = index">
+        <ion-row>
+          <ion-col col-1><div>{{log.cd_cebroker_state}}</div></ion-col>
+          <ion-col col-1><div>{{log.pro_cde}}</div></ion-col>
+          <ion-col col-2><div>{{log.cd_profession}}</div></ion-col>
+          <ion-col col-1><div>{{log.id_license}}</div></ion-col>
+          <ion-col col-3><div>{{log.dt_end}}</div></ion-col>
+          <ion-col col-2><div>{{log.ds_compl_status_returned}}</div></ion-col>
+          <ion-col col-1><div>{{log.id_client_nbr}}</div></ion-col>
+          <ion-col col-3 style="font-size: small;" align-self-center><div>{{log.dt_Start_Log}}</div></ion-col>
+          <ion-col col-3 style="font-size: small;" align-self-center><div>{{log.dt_end_log}}</div></ion-col>
+          <ion-col col-2><div>{{log.cd_environment}}</div></ion-col>
+          <ion-col col-1><div>{{log.cd_machine}}</div></ion-col>
+        </ion-row>
+      </ion-item>
+    <!--<ion-item-divider *ngIf="pager.pages && pager.pages.length">-->
+      <!--<ion-row align-items-center >-->
+        <!--<ion-col col-1>State<br>Code</ion-col>-->
+        <!--<ion-col col-1>Pro<br>Code</ion-col>-->
+        <!--<ion-col col-2>Profession</ion-col>-->
+        <!--<ion-col col-1>License<br>ID</ion-col>-->
+        <!--<ion-col col-3>Cycle End Date</ion-col>-->
+        <!--<ion-col col-2>Compliance<br>Status</ion-col>-->
+        <!--<ion-col col-1>Client<br>ID</ion-col>-->
+        <!--<ion-col col-3>Start Log Date</ion-col>-->
+        <!--<ion-col col-3>End Log Date</ion-col>-->
+        <!--<ion-col col-2>Environment</ion-col>-->
+        <!--<ion-col col-1>Machine</ion-col>-->
+      <!--</ion-row>-->
+    <!--</ion-item-divider>-->
   </ion-item-group>
-
-  <button ion-button (click)="getLogs()">GetLogs</button>
+  <div text-center>
+    <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+      <li [ngClass]="{disabled:pager.currentPage === 1}">
+        <a (click)="setPage(1)">First</a>
+      </li>
+      <li [ngClass]="{disabled:pager.currentPage === 1}">
+        <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+      </li>
+      <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+        <a (click)="setPage(page)">{{page}}</a>
+      </li>
+      <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+        <a (click)="setPage(pager.currentPage + 1)">Next</a>
+      </li>
+      <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+        <a (click)="setPage(pager.totalPages)">Last</a>
+      </li>
+    </ul>
+  </div>
 </ion-content>
