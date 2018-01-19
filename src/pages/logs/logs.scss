@@ -1,0 +1,19 @@
+page-logs {
+  ion-item-divider ion-row {
+    background-color: #f0f5ff;
+    border: 1px solid #e6e9ee;
+    border-radius: 2px;
+  }
+
+  ion-item-divider ion-row ion-col {
+    border-right: 1px solid #e6e9ee;
+    border-left: 1px solid #e6e9ee;
+    text-align: center;
+  }
+
+  ion-item ion-row ion-col div{
+    border: 1px solid #e6e9ee;
+    border-radius: 2px;
+    text-align: center;
+  }
+}
