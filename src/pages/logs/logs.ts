@@ -33,12 +33,25 @@ export class LogsPage implements OnInit{
     this.pagedItems = this.logsList.slice(this.pager.startIndex, this.pager.endIndex + 1);
   }
 
-  showToast(field: string){
-      let toast = this.toastCtrl.create({
-          message: 'Logs ordered by ' + field + ' successfully !',
-          duration: 2500,
-          position: 'bottom'
-      });
+  showToast(field: string, information: boolean){
+      let toast;
+      switch (information) {
+          case true:
+              toast = this.toastCtrl.create({
+                  message: 'Click on any column header in order to sort logs by that field !',
+                  showCloseButton: true,
+                  closeButtonText: "OK",
+                  position: 'top'
+              });
+              break;
+          case false:
+              toast = this.toastCtrl.create({
+                  message: 'Logs ordered by ' + field + ' successfully !',
+                  duration: 2500,
+                  position: 'bottom'
+              });
+              break;
+      }
       toast.present();
   }
 
@@ -131,7 +144,7 @@ export class LogsPage implements OnInit{
       }
       loader.dismiss();
       this.setPage(1);
-      this.showToast(field);
+      this.showToast(field+"", false);
   }
 
   getCurrentDate(){
