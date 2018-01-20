@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicPage, LoadingController} from 'ionic-angular';
+import {IonicPage, LoadingController, ToastController} from 'ionic-angular';
 import {LogService} from "../../services/log.service";
 import {LogModel} from "../../models/log.model";
 import {PagerService} from "../../services/pager.service";
@@ -15,13 +15,12 @@ export class LogsPage implements OnInit{
   private pager: any = {};
   private pagedItems: any[];
 
-  constructor(private loadingCtrl: LoadingController,
+  constructor(private loadingCtrl: LoadingController, private toastCtrl: ToastController,
               private logService: LogService, private pagerService: PagerService) {
   }
 
   ngOnInit(){
       this.getLogs();
-      //this.sortBy('Start Log Date');
   }
 
   setPage(page: number) {
@@ -34,6 +33,15 @@ export class LogsPage implements OnInit{
     this.pagedItems = this.logsList.slice(this.pager.startIndex, this.pager.endIndex + 1);
   }
 
+  showToast(field: string){
+      let toast = this.toastCtrl.create({
+          message: 'Logs ordered by ' + field + ' successfully !',
+          duration: 2500,
+          position: 'bottom'
+      });
+      toast.present();
+  }
+
   getLogs(){
       const loader = this.loadingCtrl.create({
           content: "Loading logs..."
@@ -44,25 +52,13 @@ export class LogsPage implements OnInit{
               data => {
                   loader.dismiss();
                   this.logsList = data;
-                  this.setPage(1);
+                  this.sortBy('Start Log Date');
               },
               error => {
                   loader.dismiss();
                   console.log(error);
               }
           );
-  }
-  getLogsTest(){
-      this.logsList.push(new LogModel("c", "", "",
-          "", "", "2017-01-17T03:24:00", "",
-          "2017-01-17T04:24:00", "", "", 1));
-      this.logsList.push(new LogModel("a", "", "",
-          "", "", "2017-01-18T03:24:00", "",
-          "2017-01-18T04:24:00", "", "", 2));
-      this.logsList.push(new LogModel("b", "", "",
-          "", "", "2017-01-19T03:24:00", "",
-          "2017-01-19T04:24:00", "", "", 0));
-      this.setPage(1);
   }
 
   sortBy(field: string){
@@ -135,11 +131,11 @@ export class LogsPage implements OnInit{
       }
       loader.dismiss();
       this.setPage(1);
+      this.showToast(field);
   }
 
   getCurrentDate(){
     const date = new Date();
-    const fulldate: string = (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear();
-    return fulldate;
+    return ((date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear());
   }
 }

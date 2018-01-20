@@ -7,31 +7,21 @@
 </ion-header>
 
 <ion-content padding>
-    <button ion-button (click)="sortBy('State Code')">Sort by State Code</button>
-    <button ion-button (click)="sortBy('Pro Code')">Sort by Pro Code</button>
-    <button ion-button (click)="sortBy('Profession')">Sort by Profession</button>
-    <button ion-button (click)="sortBy('License ID')">Sort by License ID</button>
-    <button ion-button (click)="sortBy('Cycle End Date')">Sort by Cycle End Date</button>
-    <button ion-button (click)="sortBy('Compliance Status')">Sort by Compliance Status</button>
-    <button ion-button (click)="sortBy('Client ID')">Sort by Client ID</button>
-    <button ion-button (click)="sortBy('Start Log Date')">Sort by Start Log Date</button>
-    <button ion-button (click)="sortBy('End Log Date')">Sort by End Log Date</button>
-    <button ion-button (click)="sortBy('Environment')">Sort by Environment</button>
-    <button ion-button (click)="sortBy('Machine')">Sort by Machine</button>
+  <!--Take into account to put or not the pagination list above&ndash;&gt;-->
   <ion-item-group>
     <ion-item-divider sticky *ngIf="pager.pages && pager.pages.length">
       <ion-row align-items-center >
-        <ion-col col-1>State<br>Code</ion-col>
-        <ion-col col-1>Pro<br>Code</ion-col>
-        <ion-col col-2>Profession</ion-col>
-        <ion-col col-1>License<br>ID</ion-col>
-        <ion-col col-3>Cycle End Date</ion-col>
-        <ion-col col-2>Compliance<br>Status</ion-col>
-        <ion-col col-1>Client<br>ID</ion-col>
-        <ion-col col-3>Start Log Date</ion-col>
-        <ion-col col-3>End Log Date</ion-col>
-        <ion-col col-2>Environment</ion-col>
-        <ion-col col-1>Machine</ion-col>
+        <ion-col col-1 (click)="sortBy('State Code')">State<br>Code</ion-col>
+        <ion-col col-1 (click)="sortBy('Pro Code')">Pro<br>Code</ion-col>
+        <ion-col col-2 (click)="sortBy('Profession')">Profession</ion-col>
+        <ion-col col-1 (click)="sortBy('License ID')">License<br>ID</ion-col>
+        <ion-col col-3 (click)="sortBy('Cycle End Date')">Cycle End Date</ion-col>
+        <ion-col col-2 (click)="sortBy('Compliance Status')">Compliance<br>Status</ion-col>
+        <ion-col col-1 (click)="sortBy('Client ID')">Client<br>ID</ion-col>
+        <ion-col col-3 (click)="sortBy('Start Log Date')">Start Log Date</ion-col>
+        <ion-col col-3 (click)="sortBy('End Log Date')">End Log Date</ion-col>
+        <ion-col col-2 (click)="sortBy('Environment')">Environment</ion-col>
+        <ion-col col-1 (click)="sortBy('Machine')">Machine</ion-col>
       </ion-row>
     </ion-item-divider>
     <ion-item *ngFor="let log of pagedItems; let i = index">
@@ -49,21 +39,6 @@
           <ion-col col-1><div>{{log.cd_machine}}</div></ion-col>
         </ion-row>
       </ion-item>
-    <!--<ion-item-divider *ngIf="pager.pages && pager.pages.length">-->
-      <!--<ion-row align-items-center >-->
-        <!--<ion-col col-1>State<br>Code</ion-col>-->
-        <!--<ion-col col-1>Pro<br>Code</ion-col>-->
-        <!--<ion-col col-2>Profession</ion-col>-->
-        <!--<ion-col col-1>License<br>ID</ion-col>-->
-        <!--<ion-col col-3>Cycle End Date</ion-col>-->
-        <!--<ion-col col-2>Compliance<br>Status</ion-col>-->
-        <!--<ion-col col-1>Client<br>ID</ion-col>-->
-        <!--<ion-col col-3>Start Log Date</ion-col>-->
-        <!--<ion-col col-3>End Log Date</ion-col>-->
-        <!--<ion-col col-2>Environment</ion-col>-->
-        <!--<ion-col col-1>Machine</ion-col>-->
-      <!--</ion-row>-->
-    <!--</ion-item-divider>-->
   </ion-item-group>
   <div text-center>
     <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
