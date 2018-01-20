@@ -20,8 +20,8 @@ export class LogsPage implements OnInit{
   }
 
   ngOnInit(){
-      this.getLogsTest();
-      this.sortBy('Start Log Date');
+      this.getLogs();
+      //this.sortBy('Start Log Date');
   }
 
   setPage(page: number) {
@@ -95,7 +95,7 @@ export class LogsPage implements OnInit{
               this.logsList.sort((a, b) => {
                   let date_one = new Date(a.dt_end);
                   let date_two = new Date(b.dt_end);
-                  return date_two > date_one ? 1 : date_two < date_one ? -1 : 0;
+                  return date_two > date_one ? -1 : date_two < date_one ? 1 : 0;
               });
               break;
           case 'Compliance Status':
@@ -112,14 +112,14 @@ export class LogsPage implements OnInit{
               this.logsList.sort((a, b) => {
                   let date_one = new Date(a.dt_Start_Log);
                   let date_two = new Date(b.dt_Start_Log);
-                  return date_two > date_one ? 1 : date_two < date_one ? -1 : 0;
+                  return date_two > date_one ? -1 : date_two < date_one ? 1 : 0;
               });
               break;
           case 'End Log Date':
               this.logsList.sort((a, b) => {
                   let date_one = new Date(a.dt_end_log);
                   let date_two = new Date(b.dt_end_log);
-                  return date_two > date_one ? 1 : date_two < date_one ? -1 : 0;
+                  return date_two > date_one ? -1 : date_two < date_one ? 1 : 0;
               });
               break;
           case 'Environment':
