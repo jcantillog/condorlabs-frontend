@@ -7,7 +7,17 @@
 </ion-header>
 
 <ion-content padding>
-  <!--<button ion-button (click)="getLogs()">GetLogs</button>-->
+    <button ion-button (click)="sortBy('State Code')">Sort by State Code</button>
+    <button ion-button (click)="sortBy('Pro Code')">Sort by Pro Code</button>
+    <button ion-button (click)="sortBy('Profession')">Sort by Profession</button>
+    <button ion-button (click)="sortBy('License ID')">Sort by License ID</button>
+    <button ion-button (click)="sortBy('Cycle End Date')">Sort by Cycle End Date</button>
+    <button ion-button (click)="sortBy('Compliance Status')">Sort by Compliance Status</button>
+    <button ion-button (click)="sortBy('Client ID')">Sort by Client ID</button>
+    <button ion-button (click)="sortBy('Start Log Date')">Sort by Start Log Date</button>
+    <button ion-button (click)="sortBy('End Log Date')">Sort by End Log Date</button>
+    <button ion-button (click)="sortBy('Environment')">Sort by Environment</button>
+    <button ion-button (click)="sortBy('Machine')">Sort by Machine</button>
   <ion-item-group>
     <ion-item-divider sticky *ngIf="pager.pages && pager.pages.length">
       <ion-row align-items-center >
