@@ -1,0 +1,24 @@
+<p text-center text-uppercase>Filter logs by State Code:</p>
+<ion-list radio-group [(ngModel)]="StateCode">
+  <ion-item>
+    <ion-label>FL</ion-label>
+    <ion-radio value="FL" (click)="changeStateCode()"></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label>OH</ion-label>
+    <ion-radio value="OH" (click)="changeStateCode()"></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label>GA</ion-label>
+    <ion-radio value="GA" (click)="changeStateCode()"></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label>LA</ion-label>
+    <ion-radio value="LA" (click)="changeStateCode()"></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label>All of them</ion-label>
+    <ion-radio value="All of them" (click)="changeStateCode()"></ion-radio>
+  </ion-item>
+</ion-list>
+<ion-note item-end>Filtered now by: {{StateCode}}</ion-note>

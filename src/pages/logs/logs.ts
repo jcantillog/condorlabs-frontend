@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicPage, LoadingController, ToastController} from 'ionic-angular';
+import {IonicPage, LoadingController, PopoverController, ToastController} from 'ionic-angular';
 import {LogService} from "../../services/log.service";
 import {LogModel} from "../../models/log.model";
 import {PagerService} from "../../services/pager.service";
+import {DropdownStateCodePage} from "./dropdown-state-code/dropdown-state-code";
+import {DateRangeModel} from "../../models/date_range.model";
 
 @IonicPage()
 @Component({
@@ -14,17 +16,21 @@ export class LogsPage implements OnInit{
   private logsList: LogModel[] = [];
   private pager: any = {};
   private pagedItems: any[];
+  private filterStateCode: string = "All of them";
+  private dateRange: DateRangeModel = new DateRangeModel(this.getCurrentDate(), this.getCurrentDate());
 
-  constructor(private loadingCtrl: LoadingController, private toastCtrl: ToastController,
+  constructor(private loadingCtrl: LoadingController, private toastCtrl: ToastController, private popoverCtrl: PopoverController,
               private logService: LogService, private pagerService: PagerService) {
   }
 
   ngOnInit(){
-      this.getLogs();
+      this.getLogsBy('default');
   }
 
   setPage(page: number) {
+    this.pager.totalPages = undefined;
     if (page < 1 || page > this.pager.totalPages) {
+        console.log(page);
         return;
     }
     // get pager object from service
@@ -47,7 +53,7 @@ export class LogsPage implements OnInit{
           case false:
               toast = this.toastCtrl.create({
                   message: 'Logs ordered by ' + field + ' successfully !',
-                  duration: 2500,
+                  duration: 3000,
                   position: 'bottom'
               });
               break;
@@ -55,17 +61,47 @@ export class LogsPage implements OnInit{
       toast.present();
   }
 
-  getLogs(){
+  showPopover(event: any){
+      let popover = this.popoverCtrl.create(DropdownStateCodePage,{option: this.filterStateCode});
+      popover.present({
+          ev: event
+      });
+      popover.onDidDismiss(data => {
+          if(data) {
+              this.filterStateCode = data;
+              this.getLogsBy('filters')
+          }
+      })
+  }
+
+  showModal(){}
+
+  getLogsBy(criteria: string){
+      let start_date, end_date, state_code;
       const loader = this.loadingCtrl.create({
-          content: "Loading logs..."
+          content: "Loading logs by " + criteria + "..."
       });
       loader.present();
-      this.logService.getLogs(this.getCurrentDate(), this.getCurrentDate())
+      switch (criteria) {
+          case 'default':
+              start_date = this.getCurrentDate();
+              end_date = this.getCurrentDate();
+              state_code = "";
+              break;
+          case 'filters':
+              if(this.filterStateCode == "All of them") state_code = "";
+              else state_code = this.filterStateCode;
+              start_date = this.dateRange.start_date;
+              end_date = this.dateRange.end_date;
+              break;
+      }
+      this.logService.getLogs(start_date, end_date, state_code)
           .subscribe(
               data => {
                   loader.dismiss();
                   this.logsList = data;
-                  this.sortBy('Start Log Date');
+                  if(this.logsList.length != 0) this.sortBy('Start Log Date');
+                  else this.setPage(1);
               },
               error => {
                   loader.dismiss();

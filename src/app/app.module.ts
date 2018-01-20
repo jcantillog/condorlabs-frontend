@@ -12,12 +12,14 @@ import {StatisticsPage} from "../pages/statistics/statistics";
 
 import {LogService} from "../services/log.service";
 import {PagerService} from "../services/pager.service";
+import {DropdownStateCodePage} from "../pages/logs/dropdown-state-code/dropdown-state-code";
 
 @NgModule({
   declarations: [
     MyApp,
     LogsPage,
-    StatisticsPage
+    StatisticsPage,
+    DropdownStateCodePage
   ],
   imports: [
     BrowserModule,
@@ -28,7 +30,8 @@ import {PagerService} from "../services/pager.service";
   entryComponents: [
     MyApp,
     LogsPage,
-    StatisticsPage
+    StatisticsPage,
+    DropdownStateCodePage
   ],
   providers: [
     StatusBar,

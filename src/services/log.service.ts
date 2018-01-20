@@ -10,7 +10,7 @@ export class LogService{
 
     constructor(private http: HttpClient){}
 
-    getLogs(startdate: string = "01/18/2018", enddate: string = "01/18/2018", state: string = "FL"){
+    getLogs(startdate: string = "", enddate: string = "", state: string = ""){
         const body = '?startdate='+startdate+'&enddate='+enddate+'&state='+state;
         const headers = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
         return this.http.get<LogModel[]>(this.url+body, {headers: headers});
