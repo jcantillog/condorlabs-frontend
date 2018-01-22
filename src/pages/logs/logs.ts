@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicPage, LoadingController, PopoverController, ToastController} from 'ionic-angular';
+import {IonicPage, LoadingController, ModalController, PopoverController, ToastController} from 'ionic-angular';
 import {LogService} from "../../services/log.service";
 import {LogModel} from "../../models/log.model";
 import {PagerService} from "../../services/pager.service";
 import {DropdownStateCodePage} from "./dropdown-state-code/dropdown-state-code";
 import {DateRangeModel} from "../../models/date_range.model";
+import {DateRangePage} from "./date-range/date-range";
 
 @IonicPage()
 @Component({
@@ -17,9 +18,10 @@ export class LogsPage implements OnInit{
   private pager: any = {};
   private pagedItems: any[];
   private filterStateCode: string = "All of them";
-  private dateRange: DateRangeModel = new DateRangeModel(this.getCurrentDate(), this.getCurrentDate());
+  private dateRange: DateRangeModel = new DateRangeModel(this.getCurrentDate("MM/DD/YYYY"), this.getCurrentDate("MM/DD/YYYY"));
 
-  constructor(private loadingCtrl: LoadingController, private toastCtrl: ToastController, private popoverCtrl: PopoverController,
+  constructor(private loadingCtrl: LoadingController, private toastCtrl: ToastController,
+              private popoverCtrl: PopoverController, private modalCtrl: ModalController,
               private logService: LogService, private pagerService: PagerService) {
   }
 
@@ -69,12 +71,27 @@ export class LogsPage implements OnInit{
       popover.onDidDismiss(data => {
           if(data) {
               this.filterStateCode = data;
-              this.getLogsBy('filters')
+              this.getLogsBy('filters');
           }
       })
   }
 
-  showModal(){}
+  showModal(){
+      let modal = this.modalCtrl.create(DateRangePage,
+  {start_date: this.conversorDateModelFormat(this.dateRange.start_date, "MM/DD/YYYY", "YYYY-MM-DD"),
+        end_date: this.conversorDateModelFormat(this.dateRange.end_date, "MM/DD/YYYY", "YYYY-MM-DD")});
+      modal.present();
+      modal.onDidDismiss(data => {
+          if(data){
+              data.dates.start_date = this.conversorDateModelFormat(data.dates.start_date, "YYYY-MM-DD", "MM/DD/YYYY");
+              data.dates.end_date = this.conversorDateModelFormat(data.dates.end_date, "YYYY-MM-DD", "MM/DD/YYYY")
+              this.dateRange = data.dates;
+              if(data.find){
+                  this.getLogsBy('filters');
+              }
+          }
+      })
+  }
 
   getLogsBy(criteria: string){
       let start_date, end_date, state_code;
@@ -84,8 +101,8 @@ export class LogsPage implements OnInit{
       loader.present();
       switch (criteria) {
           case 'default':
-              start_date = this.getCurrentDate();
-              end_date = this.getCurrentDate();
+              start_date = this.getCurrentDate("MM/DD/YYYY");
+              end_date = this.getCurrentDate("MM/DD/YYYY");
               state_code = "";
               break;
           case 'filters':
@@ -183,8 +200,35 @@ export class LogsPage implements OnInit{
       this.showToast(field+"", false);
   }
 
-  getCurrentDate(){
-    const date = new Date();
-    return ((date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear());
+  getCurrentDate(format: string){
+      const date = new Date();
+      switch (format) {
+          case "MM/DD/YYYY":
+              return ((date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear());
+      }
   }
+
+  conversorDateModelFormat(date: string, format: string, to_format: string){
+        let dateSplitArray;
+        if(format == "MM/DD/YYYY"){
+            dateSplitArray = date.split("/");
+            switch (to_format) {
+                case "YYYY-MM-DD":
+                    if(dateSplitArray[0] < 10 && !dateSplitArray[0].startsWith('0'))
+                    return dateSplitArray[2]+"-0"+dateSplitArray[0]+"-"+dateSplitArray[1];
+                    else if(dateSplitArray[1] < 10 && !dateSplitArray[0].startsWith('0'))
+                    return dateSplitArray[2]+"-"+dateSplitArray[0]+"-0"+dateSplitArray[1];
+                    else
+                    return dateSplitArray[2]+"-"+dateSplitArray[0]+"-"+dateSplitArray[1];
+            }
+        }
+
+        if(format == "YYYY-MM-DD"){
+            dateSplitArray = date.split("-");
+            switch (to_format) {
+                case "MM/DD/YYYY":
+                    return dateSplitArray[1]+"/"+dateSplitArray[2]+"/"+dateSplitArray[0];
+        }
+      }
+    }
 }

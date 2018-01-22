@@ -13,13 +13,15 @@ import {StatisticsPage} from "../pages/statistics/statistics";
 import {LogService} from "../services/log.service";
 import {PagerService} from "../services/pager.service";
 import {DropdownStateCodePage} from "../pages/logs/dropdown-state-code/dropdown-state-code";
+import {DateRangePage} from "../pages/logs/date-range/date-range";
 
 @NgModule({
   declarations: [
     MyApp,
     LogsPage,
     StatisticsPage,
-    DropdownStateCodePage
+    DropdownStateCodePage,
+    DateRangePage
   ],
   imports: [
     BrowserModule,
@@ -31,7 +33,8 @@ import {DropdownStateCodePage} from "../pages/logs/dropdown-state-code/dropdown-
     MyApp,
     LogsPage,
     StatisticsPage,
-    DropdownStateCodePage
+    DropdownStateCodePage,
+    DateRangePage
   ],
   providers: [
     StatusBar,

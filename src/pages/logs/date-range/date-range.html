@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Choose the date range</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="onClose()">
+        <span ion-text>Close</span>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <ion-label>Start Date</ion-label>
+    <ion-datetime displayFormat="MMM DD / YYYY" pickerFormat="MMM DD YYYY" [(ngModel)]="dates.start_date"></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label>End Date</ion-label>
+    <ion-datetime displayFormat="MMM DD / YYYY" pickerFormat="MMM DD YYYY" [(ngModel)]="dates.end_date"></ion-datetime>
+  </ion-item>
+</ion-content>
+
+<ion-footer>
+  <button ion-button icon-left block (click)="toFind()">
+    <ion-icon name="search"></ion-icon>
+    Filter by this date range
+  </button>
+</ion-footer>
