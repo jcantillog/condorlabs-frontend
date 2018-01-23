@@ -1,16 +1,22 @@
 <ion-header>
   <ion-navbar>
-    <ion-title text-center>
+    <ion-title>
       Logs
     </ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="showToast('', true)">
           <ion-icon name="information-circle"></ion-icon>
       </button>
-      <button ion-button icon-only (click)="showModal()">
+      <button ion-button icon-only (click)="showDefaultLogsAlert()">
+        <ion-icon name="refresh-circle"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="showStatistics()">
+        <ion-icon name="analytics"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="showDateRange()">
           <ion-icon name="calendar"></ion-icon>
       </button>
-      <button ion-button icon-only (click)="showPopover($event)">
+      <button ion-button icon-only (click)="showStateCodeDropdown($event)">
           <ion-icon name="arrow-dropdown-circle"></ion-icon>
       </button>
     </ion-buttons>
@@ -52,23 +58,28 @@
         </ion-row>
       </ion-item>
   </ion-item-group>
-  <div text-center>
-    <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
-      <li [ngClass]="{disabled:pager.currentPage === 1}">
-        <a (click)="setPage(1)">First</a>
-      </li>
-      <li [ngClass]="{disabled:pager.currentPage === 1}">
-        <a (click)="setPage(pager.currentPage - 1)">Previous</a>
-      </li>
-      <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
-        <a (click)="setPage(page)">{{page}}</a>
-      </li>
-      <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-        <a (click)="setPage(pager.currentPage + 1)">Next</a>
-      </li>
-      <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-        <a (click)="setPage(pager.totalPages)">Last</a>
-      </li>
-    </ul>
-  </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div text-center>
+      <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+        <li [ngClass]="{disabled:pager.currentPage === 1}">
+          <a (click)="setPage(1)">First</a>
+        </li>
+        <li [ngClass]="{disabled:pager.currentPage === 1}">
+          <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+        </li>
+        <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+          <a (click)="setPage(page)">{{page}}</a>
+        </li>
+        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+          <a (click)="setPage(pager.currentPage + 1)">Next</a>
+        </li>
+        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+          <a (click)="setPage(pager.totalPages)">Last</a>
+        </li>
+      </ul>
+    </div>
+  </ion-toolbar>
+</ion-footer>

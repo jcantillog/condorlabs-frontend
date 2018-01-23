@@ -1,11 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicPage, LoadingController, ModalController, PopoverController, ToastController} from 'ionic-angular';
+import {
+    IonicPage, LoadingController, ModalController, PopoverController,
+    ToastController
+} from 'ionic-angular';
 import {LogService} from "../../services/log.service";
 import {LogModel} from "../../models/log.model";
 import {PagerService} from "../../services/pager.service";
 import {DropdownStateCodePage} from "./dropdown-state-code/dropdown-state-code";
 import {DateRangeModel} from "../../models/date_range.model";
 import {DateRangePage} from "./date-range/date-range";
+import {StatisticsPage} from "../statistics/statistics";
 
 @IonicPage()
 @Component({
@@ -19,6 +23,8 @@ export class LogsPage implements OnInit{
   private pagedItems: any[];
   private filterStateCode: string = "All of them";
   private dateRange: DateRangeModel = new DateRangeModel(this.getCurrentDate("MM/DD/YYYY"), this.getCurrentDate("MM/DD/YYYY"));
+  private responseTime: number = 0;
+  private responseTimes: number[] = [];
 
   constructor(private loadingCtrl: LoadingController, private toastCtrl: ToastController,
               private popoverCtrl: PopoverController, private modalCtrl: ModalController,
@@ -55,7 +61,7 @@ export class LogsPage implements OnInit{
           case false:
               toast = this.toastCtrl.create({
                   message: 'Logs ordered by ' + field + ' successfully !',
-                  duration: 3000,
+                  duration: 2500,
                   position: 'bottom'
               });
               break;
@@ -63,7 +69,7 @@ export class LogsPage implements OnInit{
       toast.present();
   }
 
-  showPopover(event: any){
+  showStateCodeDropdown(event: any){
       let popover = this.popoverCtrl.create(DropdownStateCodePage,{option: this.filterStateCode});
       popover.present({
           ev: event
@@ -76,7 +82,17 @@ export class LogsPage implements OnInit{
       })
   }
 
-  showModal(){
+  showDefaultLogsAlert(){
+
+  }
+
+  showStatistics(){
+      let modal = this.modalCtrl.create(StatisticsPage,
+          {logsList: this.logsList.slice(), responseTime: this.responseTime, responseTimes: this.responseTimes});
+      modal.present();
+  }
+
+  showDateRange(){
       let modal = this.modalCtrl.create(DateRangePage,
   {start_date: this.conversorDateModelFormat(this.dateRange.start_date, "MM/DD/YYYY", "YYYY-MM-DD"),
         end_date: this.conversorDateModelFormat(this.dateRange.end_date, "MM/DD/YYYY", "YYYY-MM-DD")});
@@ -112,9 +128,13 @@ export class LogsPage implements OnInit{
               end_date = this.dateRange.end_date;
               break;
       }
+      const startRequestTime = new Date();
       this.logService.getLogs(start_date, end_date, state_code)
           .subscribe(
               data => {
+                  const endRequestTime = new Date();
+                  this.responseTime = (endRequestTime.getTime() - startRequestTime.getTime()) / 1000;
+                  this.responseTimes.push(this.responseTime);
                   loader.dismiss();
                   this.logsList = data;
                   if(this.logsList.length != 0) this.sortBy('Start Log Date');

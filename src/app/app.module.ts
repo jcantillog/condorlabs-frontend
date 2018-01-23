@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import {HttpClientModule} from "@angular/common/http";
+import {ChartsModule} from "ng2-charts";
 
 import { MyApp } from './app.component';
 
@@ -26,6 +27,7 @@ import {DateRangePage} from "../pages/logs/date-range/date-range";
   imports: [
     BrowserModule,
     HttpClientModule,
+    ChartsModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
