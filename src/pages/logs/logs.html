@@ -1,7 +1,8 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Logs
+      <img alt="logo" height="40"   src="../../assets/imgs/log.png">
+      <img alt="logo_letter" height="40"   src="../../assets/imgs/licenselog.png">
     </ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="showToast('', true)">
@@ -62,24 +63,37 @@
 
 <ion-footer>
   <ion-toolbar>
-    <div text-center>
-      <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
-        <li [ngClass]="{disabled:pager.currentPage === 1}">
-          <a (click)="setPage(1)">First</a>
-        </li>
-        <li [ngClass]="{disabled:pager.currentPage === 1}">
-          <a (click)="setPage(pager.currentPage - 1)">Previous</a>
-        </li>
-        <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
-          <a (click)="setPage(page)">{{page}}</a>
-        </li>
-        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-          <a (click)="setPage(pager.currentPage + 1)">Next</a>
-        </li>
-        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-          <a (click)="setPage(pager.totalPages)">Last</a>
-        </li>
-      </ul>
-    </div>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-5>
+          <button ion-button color="dark" clear icon-right>
+            Powered by:
+            <img item-end no-padding alt="logo_dark" height="40"   src="../../assets/imgs/wings.svg">
+            <img item-end no-padding alt="logo_light" height="40"   src="../../assets/imgs/condorlabs.svg">
+          </button>
+        </ion-col>
+        <ion-col col-15>
+          <div text-end style="height: 0px;">
+            <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+              <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(1)">First</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+              </li>
+              <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                <a (click)="setPage(page)">{{page}}</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="setPage(pager.currentPage + 1)">Next</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="setPage(pager.totalPages)">Last</a>
+              </li>
+            </ul>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-toolbar>
 </ion-footer>

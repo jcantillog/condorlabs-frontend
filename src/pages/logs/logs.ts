@@ -119,7 +119,7 @@ export class LogsPage implements OnInit{
           case 'default':
               start_date = this.getCurrentDate("MM/DD/YYYY");
               end_date = this.getCurrentDate("MM/DD/YYYY");
-              state_code = "";
+              state_code = "LA";
               break;
           case 'filters':
               if(this.filterStateCode == "All of them") state_code = "";
