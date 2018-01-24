@@ -82,10 +82,6 @@ export class LogsPage implements OnInit{
       })
   }
 
-  showDefaultLogsAlert(){
-
-  }
-
   showStatistics(){
       let modal = this.modalCtrl.create(StatisticsPage,
           {logsList: this.logsList.slice(), responseTime: this.responseTime, responseTimes: this.responseTimes});
@@ -119,7 +115,7 @@ export class LogsPage implements OnInit{
           case 'default':
               start_date = this.getCurrentDate("MM/DD/YYYY");
               end_date = this.getCurrentDate("MM/DD/YYYY");
-              state_code = "LA";
+              state_code = "";
               break;
           case 'filters':
               if(this.filterStateCode == "All of them") state_code = "";
