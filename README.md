@@ -10,6 +10,7 @@ Take into account the following steps
 1) Download the code
 2) Go inside the project folder through your CLI
 3) Run 'npm install' in order to install all project dependencies
+4) Run 'npm install ionic cordova -g' in order to install Ionic Framework in its latest version, then wait for its installation
 4) Type 'ionic serve' and press enter to run the app on localhost (by default: http://localhost:8100). The app will automatically reload if you change any of the source files.
 5) Finally, the project can be executed and tested as required
 
