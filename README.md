@@ -5,7 +5,7 @@ This project was created using [Ionic Framework](https://github.com/ionic-team/i
 
 # Running the app
 
-Take into account the following steps
+Take into account the following steps (Assuming NodeJS is already installed):
 
 1) Download the code
 2) Go inside the project folder through your CLI
